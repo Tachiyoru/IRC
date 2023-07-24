@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.hpp                                         :+:      :+:    :+:   */
+/*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: adegain <adegain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/24 13:39:36 by adegain           #+#    #+#             */
-/*   Updated: 2023/07/24 14:31:13 by sleon            ###   ########.fr       */
+/*   Created: 2023/07/24 14:37:45 by adegain           #+#    #+#             */
+/*   Updated: 2023/07/24 14:38:54 by adegain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,17 @@
 
 # include <string>
 # include <list>
+# include <iostream>
 
-class server
+class Server
 {
 	private:
 		const std::string _serverName;
 		const std::string _password;
-		server();
-		~server();
+		
+		Server();
+		~Server();
+		
 	public:
 		void	start(const int port, const std::string password);
 		void	acceptConnexions();
@@ -31,22 +34,15 @@ class server
 		void	createChannel();
 		void	delChannel();
 		void	doesChannelExist();
+		
 		void	getClientByFd();
 		void	getClientByName();
 		void	addClient();
 		void	removeClient();
+		
 		void	getServerName();
 		void	getServerAddress();
 		void	getPort();
 };
-
-server::server()
-{
-}
-
-server::~server()
-{
-}
-
 
 #endif
