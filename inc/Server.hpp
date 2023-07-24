@@ -6,7 +6,7 @@
 /*   By: adegain <adegain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:37:45 by adegain           #+#    #+#             */
-/*   Updated: 2023/07/24 14:38:54 by adegain          ###   ########.fr       */
+/*   Updated: 2023/07/24 14:41:18 by adegain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # include <string>
 # include <list>
 # include <iostream>
+
+class Client;
+class Channel;
 
 class Server
 {
