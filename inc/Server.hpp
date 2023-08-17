@@ -6,7 +6,7 @@
 /*   By: adegain <adegain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:37:45 by adegain           #+#    #+#             */
-/*   Updated: 2023/08/17 16:04:32 by adegain          ###   ########.fr       */
+/*   Updated: 2023/08/17 16:20:32 by adegain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <map>
 # include <iostream>
 # include "Client.hpp"
+#include "Utils.hpp"
 #include <sys/poll.h>
 #include <netdb.h>
 

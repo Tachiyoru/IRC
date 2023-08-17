@@ -6,7 +6,7 @@
 /*   By: adegain <adegain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:41:30 by adegain           #+#    #+#             */
-/*   Updated: 2023/08/17 16:07:03 by adegain          ###   ########.fr       */
+/*   Updated: 2023/08/17 16:18:54 by adegain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ string	Client::getModeString()
 void	Client::setMode(vector<string>& words)
 {
 	size_t			i;
-	parsed_mode_t	pm = parsed_mode(word[1], true);
+	parsedMode_t	pm = parsed_mode(word[1], true);
 	vector<string>	args;
 	string			changes = pm.sign ? "+" : "-";
 

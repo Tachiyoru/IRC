@@ -6,7 +6,7 @@
 /*   By: adegain <adegain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:19:51 by adegain           #+#    #+#             */
-/*   Updated: 2023/08/17 16:07:03 by adegain          ###   ########.fr       */
+/*   Updated: 2023/08/17 16:20:44 by adegain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,7 +237,7 @@ string	Channel::getCreationTime()
 void	Channel::setMode(Client* sender, const string& cmd_name, vector<string>& words)
 {
 	size_t			i;
-	parse_mode_t	pm = parse_mode(words[1], false);
+	parseMode_t		pm = parse_mode(words[1], false);
 	vector<string>	args;
 	string			changes;
 	Client*			target;
