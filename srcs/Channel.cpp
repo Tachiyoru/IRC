@@ -6,7 +6,7 @@
 /*   By: adegain <adegain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:19:51 by adegain           #+#    #+#             */
-/*   Updated: 2023/08/17 16:00:47 by adegain          ###   ########.fr       */
+/*   Updated: 2023/08/17 16:07:03 by adegain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,19 +190,19 @@ void	Channel::broadcast(const string& s, Client* ignore)
 	{
 		cm = it->second->getMode();
 		if (cm->s && it->second != ignore)
-			srv->sendString(it->second, s);
+			server->sendString(it->second, s);
 	}
 	for (it = operators.begin(); it != operators.end(); it++)
 	{
 		cm = it->second->getMode();
 		if (cm->s && it->second != ignore)
-			srv->sendString(it->second, s);
+			server->sendString(it->second, s);
 	}
 	for (it = voiced.begin(); it != voiced.end(); it++)
 	{
 		cm = it->second->getMode();
 		if (cm->s && it->second != ignore)
-			srv->sendString(it->second, s);
+			server->sendString(it->second, s);
 	}
 }
 
@@ -252,7 +252,7 @@ void	Channel::setMode(Client* sender, const string& cmd_name, vector<string>& wo
 		{
 			if (pm.modes[i] == 'o')
 			{
-				target = srv->findClient(words[2]);
+				target = server->findClient(words[2]);
 				if (!target || !isConnected(target))
 				{
 					RFC1459_ERR_NOSUCHNICK(sender, words[2]);
@@ -335,7 +335,7 @@ void	Channel::disconnectUser(Client* c)
 	removeVoiced(c);
 	if (!getSize())
 	{
-		srv->getChannels()->erase(name);
+		server->getChannels()->erase(name);
 		delete this;
 	}
 }

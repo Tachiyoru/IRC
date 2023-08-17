@@ -6,7 +6,7 @@
 /*   By: adegain <adegain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:41:30 by adegain           #+#    #+#             */
-/*   Updated: 2023/08/17 14:24:45 by adegain          ###   ########.fr       */
+/*   Updated: 2023/08/17 16:07:03 by adegain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ void	Client::setMode(vector<string>& words)
 			args.push_back(nick);
 			args.push_back(nick);
 			args.push_back(changes);
-			srv->sendString(this, format(RPL_USER_MODE, args));
+			server->sendString(this, format(RPL_USER_MODE, args));
 		}
 	}
 }
