@@ -6,13 +6,13 @@
 #    By: adegain <adegain@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/24 13:02:18 by adegain           #+#    #+#              #
-#    Updated: 2023/07/24 14:39:09 by adegain          ###   ########.fr        #
+#    Updated: 2023/08/17 14:20:06 by adegain          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME:=	ircserv
 
-SRCS:=	main 
+SRCS:=	main Server Client Channel
 
 # --- Compilation ----
 CC:= c++
