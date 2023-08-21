@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adegain <adegain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:37:45 by adegain           #+#    #+#             */
-/*   Updated: 2023/08/17 16:04:32 by adegain          ###   ########.fr       */
+/*   Updated: 2023/08/21 18:31:54 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,30 @@
 # include <list>
 # include <map>
 # include <iostream>
+# include <sys/poll.h>
+# include <netdb.h>
+# include <unistd.h> // fnctl
+
+# include "Channel.hpp"
 # include "Client.hpp"
-#include <sys/poll.h>
-#include <netdb.h>
 
 class Client;
 class Channel;
+
+bool	g_status;
 
 class Server
 {
 	private:
 
 		const std::string	_serverName;
-		const std::string	_password;
+		std::string	_password;
 
+		int			_port;
 		int					_socket;
-		int					_state;
+
+
+		std::vector<pollfd>	_pollfds;
 
 		std::list<Client>	_clients;
 
@@ -62,8 +70,12 @@ class Server
 		Server();
 		~Server();
 
+		void	stop();
+
 		bool	init(const int port, const std::string password);
 		bool	run();
+
+		bool	welcoming();
 };
 
 #endif

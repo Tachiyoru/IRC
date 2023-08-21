@@ -6,13 +6,15 @@
 /*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 13:39:25 by adegain           #+#    #+#             */
-/*   Updated: 2023/08/15 16:41:35 by sleon            ###   ########.fr       */
+/*   Updated: 2023/08/21 17:55:58 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Server.hpp"
 #include <stdlib.h>
 #include <signal.h>
+
+bool	g_stqtus = 0;
 
 bool	checkPort(std::string str, int value)
 {
@@ -37,7 +39,7 @@ bool	checkPort(std::string str, int value)
 void	sigHandler(int sig)
 {
 	if (sig == SIGINT){
-		// server.stop();
+		g_status = 1;
 		exit(4);
 	}
 }

@@ -6,19 +6,20 @@
 /*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:55:30 by sleon             #+#    #+#             */
-/*   Updated: 2023/08/15 17:47:16 by sleon            ###   ########.fr       */
+/*   Updated: 2023/08/21 18:52:10 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Server.hpp"
 #include <stdio.h>
+#include <unistd.h>
 
 // ************************************************************************** //
 //                        Constructors / Destructors                          //
 // ************************************************************************** //
 
-Server::Server() : _serverName("Anne.Shan"), _password(), _socket(-1), _state(1),
-	_pollfds(){}
+Server::Server() : _serverName("Anne.Shan"), _password(), _socket(-1), _pollfds()
+{}
 
 Server::~Server() {}
 
@@ -26,13 +27,35 @@ Server::~Server() {}
 //                              Public functions                              //
 // ************************************************************************** //
 
+
+bool	Server::welcoming()
+{
+	sockaddr_in	addr = {};
+	socklen_t	addrlen = sizeof(addr);
+	int			newSocket;
+
+	newSocket = accept(this->_socket, reinterpret_cast<sockaddr *>(&addr), &addrlen);
+	if (newSocket != -1)
+	{
+		_clients.push_back(Client());
+		// _clients.back().setAddr(addr);
+		// _clients.back().setsocket(newSocket);
+		_clientList.insert(std::pair<std::string, Client *const>(_clients.back().getNick(), &_clients.back()));
+		_pollfds.push_back(pollfd());
+		_pollfds.back().fd = newSocket;
+		_pollfds.back().events = POLLIN | POLLOUT;
+		fcntl(newSocket, F_SETFL, O_NONBLOCK | O_DIRECT);
+		std::cout<<"Connected to server successfully"<<std::endl;
+		return 0;
+	}
+}
+
 bool	Server::run()
 {
-	this->_state = 0;
-	// std::cout<<"normalement ca tourne"<<std::endl;
-	while (!this->_state)
+	g_status = 0;	// std::cout<<"normalement ca tourne"<<std::endl;
+	while (!g_status)
 	{
-		if (!this->_state || !this->welcoming())
+		if (!g_status || !this->welcoming())
 		{
 			this->stop();
 			return 1;
@@ -47,7 +70,7 @@ void	Server::stop()
 	if (this->_socket != -1)
 		close(this->_socket);
 	this->_socket = 1;
-	this->_state = 1;
+	g_status = 1;
 	// this->_channelList.clear();
 	// this->_clientList.clear();
 	// this->_commandList.clear();
