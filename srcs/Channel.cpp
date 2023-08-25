@@ -6,30 +6,30 @@
 /*   By: adegain <adegain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:19:51 by adegain           #+#    #+#             */
-/*   Updated: 2023/08/17 16:20:44 by adegain          ###   ########.fr       */
+/*   Updated: 2023/08/25 15:37:22 by adegain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Channel.hpp"
 
-Channel::Channel(string _name)
-	: name(_name), topic("")
+Channel::Channel(string name)
+	: _name(name), _topic("")
 {
-	modes.p = false;
-	modes.s = false;
-	modes.i = false;
-	modes.t = true;
-	modes.n = true;
-	modes.m = false;
-	modes.lbool = false;
-	modes.kbool = false;
-	modes.l = SOMAXCONN;
-	modes.k = "";
+	_modes.p = false;
+	_modes.s = false;
+	_modes.i = false;
+	_modes.t = true;
+	_modes.n = true;
+	_modes.m = false;
+	_modes.lbool = false;
+	_modes.kbool = false;
+	_modes.l = SOMAXCONN;
+	_modes.k = "";
 
 	time_t				seconds = time(NULL);
 	std::stringstream	ss;
 	ss << seconds;
-	creation = ss.str();
+	_creation = ss.str();
 }
 
 Channel::~Channel()
@@ -38,81 +38,81 @@ Channel::~Channel()
 
 string	Channel::getName()
 {
-	return name;
+	return _name;
 }
 
 string	Channel::getTopic()
 {
-	return topic;
+	return _topic;
 }
 
-void	Channel::setTopic(string _topic)
+void	Channel::setTopic(string topic)
 {
-	topic = _topic;
+	_topic = topic;
 }
 
 channelMode_t*	Channel::getMode()
 {
-	return &modes;
+	return &_modes;
 }
 
 bool	Channel::onChannel(int client_fd)
 {
-	return (users.count(client_fd) || operators.count(client_fd) || voiced.count(client_fd)) ? true : false;
+	return (_users.count(client_fd) || _operators.count(client_fd) || _voiced.count(client_fd)) ? true : false;
 }
 
 void	Channel::addUser(Client* c)
 {
-	users[c->getFd()] = c;
+	_users[c->getFd()] = c;
 	removeOperator(c);
 	removeVoiced(c);
 }
 
 void	Channel::addOperator(Client* c)
 {
-	operators[c->getFd()] = c;
+	_operators[c->getFd()] = c;
 	removeUser(c);
 	removeVoiced(c);
 }
 
 void	Channel::removeUser(Client* c)
 {
-	if (users.count(c->getFd()))
-		users.erase(c->getFd());
+	if (_users.count(c->getFd()))
+		_users.erase(c->getFd());
 }
 
 void	Channel::removeOperator(Client* c)
 {
-	if (operators.count(c->getFd()))
-		operators.erase(c->getFd());
+	if (_operators.count(c->getFd()))
+		_operators.erase(c->getFd());
 }
 
 void	Channel::addVoiced(Client* c)
 {
-	voiced[c->getFd()] = c;
+	_voiced[c->getFd()] = c;
 	removeUser(c);
 	removeOperator(c);
 }
 
 void	Channel::removeVoiced(Client* c)
 {
-	if (voiced.count(c->getFd()))
-		voiced.erase(c->getFd());
+	if (_voiced.count(c->getFd()))
+		_voiced.erase(c->getFd());
 }
 
 bool	Channel::isUser(Client* c)
 {
-	return users.count(c->getFd()) != 0;
+	return _users.count(c->getFd()) != 0;
 }
 
 bool	Channel::isOperator(Client* c)
 {
-	return operators.count(c->getFd()) != 0;
+	return _operators.count(c->getFd()) != 0;
 }
 
 bool Channel::isVoiced(Client* c)
 {
-	return voiced.count(c->getFd()) != 0;
+	return _voiced.count(c->getFd()) != 0;
 }
 
 bool	Channel::isConnected(Client* c)
@@ -122,18 +122,18 @@ bool	Channel::isConnected(Client* c)
 
 bool	Channel::isInvited(Client* c)
 {
-	return invited.count(c->getFd()) != 0;
+	return _invited.count(c->getFd()) != 0;
 }
 
 void	Channel::addInvite(Client* c)
 {
-	invited[c->getFd()] = c;
+	_invited[c->getFd()] = c;
 }
 
 void	Channel::removeInvitation(Client* c)
 {
-	if (invited.count(c->getFd()) != 0)
-		invited.erase(c->getFd());
+	if (_invited.count(c->getFd()) != 0)
+		_invited.erase(c->getFd());
 }
 
 string	Channel::getUserList(bool connected)
@@ -141,14 +141,14 @@ string	Channel::getUserList(bool connected)
 	string	ret = "";
 	map<int, Client*>::iterator it;
 
-	for (it = users.begin(); it != users.end(); it++)
+	for (it = _users.begin(); it != _users.end(); it++)
 	{
 		if (!connected && it->second->getMode()->i)
 			continue;
 		ret += it->second->getNick();
 		ret += " ";
 	}
-	for (it = operators.begin(); it != operators.end(); it++)
+	for (it = _operators.begin(); it != _operators.end(); it++)
 	{
 		if (!connected && it->second->getMode()->i)
 			continue;
@@ -156,7 +156,7 @@ string	Channel::getUserList(bool connected)
 		ret += it->second->getNick();
 		ret += " ";
 	}
-	for (it = voiced.begin(); it != voiced.end(); it++)
+	for (it = _voiced.begin(); it != _voiced.end(); it++)
 	{
 		if (!connected && it->second->getMode()->i)
 			continue;
@@ -172,11 +172,11 @@ int	Channel::getSize()
 	int	ret = 0;
 	map<int, Client*>::iterator it;
 
-	for (it = users.begin(); it != users.end(); it++)
+	for (it = _users.begin(); it != _users.end(); it++)
 		ret++;
-	for (it = operators.begin(); it != operators.end(); it++)
+	for (it = _operators.begin(); it != _operators.end(); it++)
 		ret++;
-	for (it = voiced.begin(); it != voiced.end(); it++)
+	for (it = _voiced.begin(); it != _voiced.end(); it++)
 		ret++;
 	return ret;
 }
@@ -186,19 +186,19 @@ void	Channel::broadcast(const string& s, Client* ignore)
 	map<int, Client*>::iterator it;
 	clientMode_t*	cm;
 
-	for (it = users.begin(); it != users.end(); it++)
+	for (it = _users.begin(); it != _users.end(); it++)
 	{
 		cm = it->second->getMode();
 		if (cm->s && it->second != ignore)
 			server->sendString(it->second, s);
 	}
-	for (it = operators.begin(); it != operators.end(); it++)
+	for (it = _operators.begin(); it != _operators.end(); it++)
 	{
 		cm = it->second->getMode();
 		if (cm->s && it->second != ignore)
 			server->sendString(it->second, s);
 	}
-	for (it = voiced.begin(); it != voiced.end(); it++)
+	for (it = _voiced.begin(); it != _voiced.end(); it++)
 	{
 		cm = it->second->getMode();
 		if (cm->s && it->second != ignore)
@@ -210,40 +210,40 @@ string	Channel::getModeString()
 {
 	string	ret = "+";
 
-	if (modes.p)
+	if (_modes.p)
 		ret += "p";
-	if (modes.s)
+	if (_modes.s)
 		ret += "s";
-	if (modes.i)
+	if (_modes.i)
 		ret += "i";
-	if (modes.t)
+	if (_modes.t)
 		ret += "t";
-	if (modes.n)
+	if (_modes.n)
 		ret += "n";
-	if (modes.m)
+	if (_modes.m)
 		ret += "m";
-	if (modes.lbool)
+	if (_modes.lbool)
 		ret += "l";
-	if (modes.kbool && !modes.k.empty())
+	if (_modes.kbool && !_modes.k.empty())
 		ret += "k";
 	return ret;
 }
 
 string	Channel::getCreationTime()
 {
-	return creation;
+	return _creation;
 }
 
 void	Channel::setMode(Client* sender, const string& cmd_name, vector<string>& words)
 {
 	size_t			i;
-	parseMode_t		pm = parse_mode(words[1], false);
+	parsedMode_t		pm = parse_mode(words[1], false);
 	vector<string>	args;
 	string			changes;
 	Client*			target;
 
 	if (!pm.valid)
-		RFC1459_ERR_UNKNOWNMODE(sender, pm.invalid_mode);
+		RFC1459_ERR_UNKNOWNMODE(sender, pm.invalidMode);
 	else if (pm.modes.find_first_of("ov") != string::npos && (pm.modes.size() != 1 || words.size() < 3))
 		RFC1459_ERR_NEEDMOREPARAMS(sender, cmd_name);
 	else
@@ -265,7 +265,7 @@ void	Channel::setMode(Client* sender, const string& cmd_name, vector<string>& wo
 			}
 			else if (pm.modes[i] == 'v')
 			{
-				target = svr->findClient(words[2]);
+				target = server->findClient(words[2]);
 				if (!target || !isConnected(target))
 				{
 					RFC1459_ERR_NOSUCHNICK(sender, words[2]);
@@ -283,11 +283,11 @@ void	Channel::setMode(Client* sender, const string& cmd_name, vector<string>& wo
 					if (pm.modes.size() != 1 || words.size() < 3)
 						RFC1459_ERR_NEEDMOREPARAMS(sender, cmd_name);
 					else
-						modes.l = std::atoi(words[2].c_str());
+						_modes.l = std::atoi(words[2].c_str());
 				}
 				else
-					modes.l = SOMAXCONN;
-				modes.lbool = pm.sign;
+					_modes.l = SOMAXCONN;
+				_modes.lbool = pm.sign;
 			}
 			else if (pm.modes[i] == 'k')
 			{
@@ -296,36 +296,37 @@ void	Channel::setMode(Client* sender, const string& cmd_name, vector<string>& wo
 					if (pm.modes.size() != 1 || words.size() < 3)
 						RFC1459_ERR_NEEDMOREPARAMS(sender, cmd_name);
 					else
-						modes.k = words[2];
+						_modes.k = words[2];
 				}
 				else
-					modes.k = "";
-				modes.kbool = pm.sign;
+					_modes.k = "";
+				_modes.kbool = pm.sign;
 			}
 			else if (pm.modes[i] == 'p')
-				modes.p = pm.sign;
+				_modes.p = pm.sign;
 			else if (pm.modes[i] == 's')
-				modes.p = pm.sign;
+				_modes.p = pm.sign;
 			else if (pm.modes[i] == 'i')
-				modes.p = pm.sign;
+				_modes.p = pm.sign;
 			else if (pm.modes[i] == 't')
-				modes.p = pm.sign;
+				_modes.p = pm.sign;
 			else if (pm.modes[i] == 'n')
-				modes.p = pm.sign;
+				_modes.p = pm.sign;
 			else if (pm.modes[i] == 'm')
-				modes.p = pm.sign;
+				_modes.p = pm.sign;
 		}
 		args.push_back(sender->getNick());
 		args.push_back(sender->getUser());
 		args.push_back(sender->getHost());
-		args.push_back(name);
+		args.push_back(_name); // -----------------------------------------------------> a verifier
 		changes = "-";
 		if (pm.sign)
 			changes = "+";
 		changes += pm.modes;
 		args.push_back(changes);
 		broadcast(format(RPL_CHANNEL_MODE, args), NULL);
-	}
+	}voiced
+voiced
 }
 
 void	Channel::disconnectUser(Client* c)
@@ -335,7 +336,7 @@ void	Channel::disconnectUser(Client* c)
 	removeVoiced(c);
 	if (!getSize())
 	{
-		server->getChannels()->erase(name);
+		server->getChannels()->erase(_name); // ---------------------------------------> a verifier
 		delete this;
 	}
 }
@@ -346,17 +347,17 @@ string	Channel::getVisibleCount()
 	int				count = 0;
 	map<int, Client*>::iterator it;
 
-	for (it = users.begin(); it != users.end(); it++)
+	for (it = _users.begin(); it != _users.end(); it++)
 	{
 		if (!it->second->getMode()->i)
 			count++;
 	}
-	for (it = operators.begin(); it != operators.end(); it++)
+	for (it = _operators.begin(); it != _operators.end(); it++)
 	{
 		if (!it->second->getMode()->i)
 			count++;
 	}
-	for (it = voiced.begin(); it != voiced.end(); it++)
+	for (it = _voiced.begin(); it != _voiced.end(); it++)
 	{
 		if (!it->second->getMode()->i)
 			count++;

@@ -6,7 +6,7 @@
 /*   By: adegain <adegain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 16:12:43 by adegain           #+#    #+#             */
-/*   Updated: 2023/08/17 17:31:51 by adegain          ###   ########.fr       */
+/*   Updated: 2023/08/25 14:25:57 by adegain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void	RFC1459_ERR_NEEDMOREPARAMS(Client* sender, const string& command);
 void	RFC1459_ERR_ALREADYREGISTRED(Client* sender);
 void	RFC1459_ERR_PASSWDMISMATCH(Client* sender);
 void	RFC1459_ERR_NONICKNAMEGIVEN(Client* sender);
-void	RFC1459_ERR_NOSUCHSERVER(Client* sender, const string& server);
+void	RFC1459_ERR_NOSUCHSERVER(Client* sender, const string& srv);
 void	RFC1459_ERR_NOSUCHNICK(Client* sender, const string& nick);
 void	RFC1459_ERR_NOSUCHCHANNEL(Client* sender, const string& channel);
 void	RFC1459_ERR_NOTONCHANNEL(Client* sender, const string& channel);
