@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adegain <adegain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:29:27 by adegain           #+#    #+#             */
-/*   Updated: 2023/08/17 14:24:23 by adegain          ###   ########.fr       */
+/*   Updated: 2023/08/25 14:26:34 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,16 @@ class Client
 		bool			has_pwd, has_authd;
 		string			nick, user, host, realName;
 		clientMode_t	modes;
+		sockaddr_in		_addr;
+		int				_socket;
 
 	public:
+		Client(sockaddr_in const &addr = sockaddr_in(), int sockfd = -1);
 		Client(pollfd* _pfd);
 		~Client();
-		
+
+		void			setAddr(sockaddr_in addr);
+		void			setSocket(int socket);
 		pollfd*			getPfd();
 		int				getFd();
 		bool			hasPwd();

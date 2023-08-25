@@ -6,7 +6,7 @@
 /*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:37:45 by adegain           #+#    #+#             */
-/*   Updated: 2023/08/21 18:31:54 by sleon            ###   ########.fr       */
+/*   Updated: 2023/08/25 14:16:32 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ class Server
 
 		std::list<Client>	_clients;
 
-		std::map<std::string const, Client const> _clientList;
+		std::map<std::string const, Client *const> _clientList;
 		// std::map<std::string const, Channel const> _channelList;
 
 		typedef void (*fct)(int);

@@ -6,13 +6,14 @@
 /*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:55:30 by sleon             #+#    #+#             */
-/*   Updated: 2023/08/21 18:52:10 by sleon            ###   ########.fr       */
+/*   Updated: 2023/08/25 14:28:10 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Server.hpp"
 #include <stdio.h>
 #include <unistd.h>
+#include <fcntl.h>
 
 // ************************************************************************** //
 //                        Constructors / Destructors                          //
@@ -38,8 +39,8 @@ bool	Server::welcoming()
 	if (newSocket != -1)
 	{
 		_clients.push_back(Client());
-		// _clients.back().setAddr(addr);
-		// _clients.back().setsocket(newSocket);
+		_clients.back().setAddr(addr);
+		_clients.back().setSocket(newSocket);
 		_clientList.insert(std::pair<std::string, Client *const>(_clients.back().getNick(), &_clients.back()));
 		_pollfds.push_back(pollfd());
 		_pollfds.back().fd = newSocket;
@@ -72,7 +73,7 @@ void	Server::stop()
 	this->_socket = 1;
 	g_status = 1;
 	// this->_channelList.clear();
-	// this->_clientList.clear();
+	this->_clientList.clear();
 	// this->_commandList.clear();
 }
 

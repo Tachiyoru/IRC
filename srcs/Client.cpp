@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adegain <adegain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:41:30 by adegain           #+#    #+#             */
-/*   Updated: 2023/08/17 16:07:03 by adegain          ###   ########.fr       */
+/*   Updated: 2023/08/25 14:27:48 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Client.hpp"
+
+Client::Client(sockaddr_in const &addr = sockaddr_in(), int sockfd = -1)
+	:  pfd(), has_pwd(false), has_authd(false), nick("*"), user(nick), host(nick), realName(nick)
+{
+	modes.s = true;
+	modes.i = modes.o = false;
+}
 
 Client::Client(pollfd* _pfd)
 	: pfd(_pfd), has_pwd(false), has_authd(false), nick("*"), user(nick), host(nick), realName(nick)
@@ -21,6 +28,15 @@ Client::Client(pollfd* _pfd)
 
 Client::~Client()
 {
+}
+
+void	Client::setAddr(sockaddr_in addr)
+{
+	this->_addr = addr;
+}
+void	Client::setSocket(int socket)
+{
+	this->_socket = socket;
 }
 
 pollfd*	Client::getPfd()
