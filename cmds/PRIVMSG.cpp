@@ -6,7 +6,7 @@
 /*   By: adegain <adegain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 15:26:41 by adegain           #+#    #+#             */
-/*   Updated: 2023/08/31 15:48:45 by adegain          ###   ########.fr       */
+/*   Updated: 2023/08/31 16:05:38 by adegain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ void	RFC1459_PRIVMSG(Client* sender, parsedCmd_t& pc)
 	size_t			i;
 	Channel*		chan;
 	Client*			cli;
-
+CHANOPRIVSNEEDED
 	if (!pc.has_words)
 		server->sendString(sender, format(ERR_NORECIPIENT, args));
 	else if (!pc.has_suffix)
-		server->sendSstring(sender, format(ERR_NOTEXTTOSEND, args));
+		server->sendString(sender, format(ERR_NOTEXTTOSEND, args));
 	else
 	{
 		recipients = split(pc.words[0], ",");
