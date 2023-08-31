@@ -6,12 +6,10 @@
 /*   By: adegain <adegain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 15:51:58 by adegain           #+#    #+#             */
-/*   Updated: 2023/08/29 15:51:59 by adegain          ###   ########.fr       */
+/*   Updated: 2023/08/31 15:43:21 by adegain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include "../inc/RFC1459.hpp"
 #include "../inc/Server.hpp"
 #include "../inc/Channel.hpp"
 #include "../inc/Client.hpp"
@@ -76,7 +74,7 @@ void	RFC1459_LIST(Client* sender, parsedCmd_t& pc)
 			else if (cm->p)
 			{
 				args.push_back("Prv");
-				args.push_back(it->second->getVisibleCount());
+				args.push_back(chan->getVisibleCount());
 				args.push_back("");
 			}
 			else
