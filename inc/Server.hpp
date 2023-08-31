@@ -6,7 +6,7 @@
 /*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:37:45 by adegain           #+#    #+#             */
-/*   Updated: 2023/08/30 14:03:01 by sleon            ###   ########.fr       */
+/*   Updated: 2023/08/31 17:55:49 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,14 @@
 # include <map>
 # include <netdb.h>
 # include <sstream>
-
 # include "Channel.hpp"
 # include "Client.hpp"
+# include "Utils.hpp"
+# include <sys/poll.h>
+# include <netdb.h>
+
 #define SERVER_ASSERT(cond) if ((cond) == -1)    return false
-#include "Utils.hpp"
-#include <sys/poll.h>
-#include <netdb.h>
+#define SERVER_NAME "Anne.Shan"
 
 class Client;
 class Channel;

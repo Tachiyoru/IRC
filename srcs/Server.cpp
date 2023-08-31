@@ -6,7 +6,7 @@
 /*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:55:30 by sleon             #+#    #+#             */
-/*   Updated: 2023/08/31 13:54:30 by sleon            ###   ########.fr       */
+/*   Updated: 2023/08/31 13:55:38 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,25 +115,25 @@ bool	Server::init(int port, char* password)
 	_pollfds[_size].events = POLLIN;
 	_size++;
 
-	// _cmdsList["PASS"] = &RFC1459_PASS;
-	// _cmdsList["NICK"] = &RFC1459_NICK;
-	// _cmdsList["USER"] = &RFC1459_USER;
-	// _cmdsList["MOTD"] = &RFC1459_MOTD;
-	// _cmdsList["TIME"] = &RFC1459_TIME;
-	// _cmdsList["PING"] = &RFC1459_PING;
-	// _cmdsList["QUIT"] = &RFC1459_QUIT;
-	// _cmdsList["TOPIC"] = &RFC1459_TOPIC;
-	// _cmdsList["NAMES"] = &RFC1459_NAMES;
-	// _cmdsList["JOIN"] = &RFC1459_JOIN;
-	// _cmdsList["PART"] = &RFC1459_PART;
-	// _cmdsList["MODE"] = &RFC1459_MODE;
-	// _cmdsList["OPER"] = &RFC1459_OPER;
-	// _cmdsList["KILL"] = &RFC1459_KILL;
-	// _cmdsList["KICK"] = &RFC1459_KICK;
-	// _cmdsList["PRIVMSG"] = &RFC1459_PRIVMSG;
-	// _cmdsList["NOTICE"] = &RFC1459_NOTICE;
-	// _cmdsList["INVITE"] = &RFC1459_INVITE;
-	// _cmdsList["LIST"] = &RFC1459_LIST;
+	_cmdsList["PASS"] = &RFC1459_PASS;
+	_cmdsList["NICK"] = &RFC1459_NICK;
+	_cmdsList["USER"] = &RFC1459_USER;
+	_cmdsList["MOTD"] = &RFC1459_MOTD;
+	_cmdsList["TIME"] = &RFC1459_TIME;
+	_cmdsList["PING"] = &RFC1459_PING;
+	_cmdsList["QUIT"] = &RFC1459_QUIT;
+	_cmdsList["TOPIC"] = &RFC1459_TOPIC;
+	_cmdsList["NAMES"] = &RFC1459_NAMES;
+	_cmdsList["JOIN"] = &RFC1459_JOIN;
+	_cmdsList["PART"] = &RFC1459_PART;
+	_cmdsList["MODE"] = &RFC1459_MODE;
+	_cmdsList["OPER"] = &RFC1459_OPER;
+	_cmdsList["KILL"] = &RFC1459_KILL;
+	_cmdsList["KICK"] = &RFC1459_KICK;
+	_cmdsList["PRIVMSG"] = &RFC1459_PRIVMSG;
+	_cmdsList["NOTICE"] = &RFC1459_NOTICE;
+	_cmdsList["INVITE"] = &RFC1459_INVITE;
+	_cmdsList["LIST"] = &RFC1459_LIST;
 
 	return true;
 }

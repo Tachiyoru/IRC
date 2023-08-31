@@ -6,7 +6,7 @@
 /*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 13:39:25 by adegain           #+#    #+#             */
-/*   Updated: 2023/08/21 17:55:58 by sleon            ###   ########.fr       */
+/*   Updated: 2023/08/31 17:56:04 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	main(int argc, char** argv)
 	if (!checkPort(argv[1], atoi(argv[1])))
 		return 2;
 	signal(SIGINT, sigHandler);
-	if (server.init(atoi(argv[1]), argv[2]) || server.run())
+	if (server.init(atoi(argv[1]), argv[2]))
 		return 3;
 
 }
