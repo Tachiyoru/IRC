@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adegain <adegain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:29:27 by adegain           #+#    #+#             */
-/*   Updated: 2023/08/17 16:20:37 by adegain          ###   ########.fr       */
+/*   Updated: 2023/08/25 15:11:33 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,29 +28,35 @@ typedef struct clientMode_s
 class Client
 {
 	private:
-		struct pollfd*	pfd;
-		bool			has_pwd, has_authd;
-		string			nick, user, host, realName;
-		clientMode_t	modes;
+		struct pollfd*	_pfd;
+		bool			_has_pwd, _has_authd;
+		std::string		_nick, _user, _host, _realName;
+		clientMode_t	_modes;
+		sockaddr_in		_addr;
+		int				_socket;
 
 	public:
-		Client(pollfd* _pfd);
+		Client();
+		Client(pollfd* pfd);
 		~Client();
-		
+
+		void			setAddr(sockaddr_in addr);
+		void			setSocket(int socket);
+
 		pollfd*			getPfd();
 		int				getFd();
 		bool			hasPwd();
-		void			hasPwd(bool _has_pwd);
+		void			hasPwd(bool has_pwd);
 		bool			hasAuthd();
-		void			hasAuthd(bool _has_authd);
+		void			hasAuthd(bool has_authd);
 		string			getNick();
-		void			setNick(const string& _nick);
+		void			setNick(const string& nick);
 		string			getUser();
-		void			setUser(const string& _user);
+		void			setUser(const string& user);
 		string			getHost();
-		void			setHost(const string& _host);
+		void			setHost(const string& host);
 		string			getRealName();
-		void			setRealName(const string& _real_name);
+		void			setRealName(const string& real_name);
 		clientMode_t*	getMode();
 		string			getModeString();
 		void			setMode(vector<string>& words);
