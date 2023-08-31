@@ -28,8 +28,10 @@
 
 # include "Channel.hpp"
 # include "Client.hpp"
-
 #define SERVER_ASSERT(cond) if ((cond) == -1)    return false
+#include "Utils.hpp"
+#include <sys/poll.h>
+#include <netdb.h>
 
 class Client;
 class Channel;

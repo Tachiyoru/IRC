@@ -131,7 +131,7 @@ string	Client::getModeString()
 // void	Client::setMode(vector<string>& words)
 {
 	size_t			i;
-	parsed_mode_t	pm = parsed_mode(word[1], true);
+	parsedMode_t	pm = parsed_mode(word[1], true);
 	vector<string>	args;
 	string			changes = pm.sign ? "+" : "-";
 

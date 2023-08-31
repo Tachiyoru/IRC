@@ -6,7 +6,7 @@
 /*   By: adegain <adegain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 13:52:25 by adegain           #+#    #+#             */
-/*   Updated: 2023/08/17 14:23:14 by adegain          ###   ########.fr       */
+/*   Updated: 2023/08/25 15:34:46 by adegain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include "Server.hpp"
 #include "Client.hpp"
+#include "Utils.hpp"
 #include <string>
 #include <sstream>
 #include <cstdlib>
@@ -32,20 +33,20 @@ typedef struct channelMode_s
 class Channel
 {
 	private:
-		channelMode_t		modes;
-		string				name, topic, creation;
-		map<int, Client*>	users;
-		map<int, Client*>	operators;
-		map<int, Client*>	invited;
-		map<int, Client*>	voiced;
+		channelMode_t		_modes;
+		string				_name, _topic, _creation;
+		map<int, Client*>	_users;
+		map<int, Client*>	_operators;
+		map<int, Client*>	_invited;
+		map<int, Client*>	_voiced;
 
 	public:
-		Channel(string _name);
+		Channel(string name);
 		~Channel();
 
 		string			getName();
 		string			getTopic();
-		void			setTopic(string _topic);
+		void			setTopic(string topic);
 		channelMode_t*	getMode();
 		bool			onChannel(int client_fd);
 		void			addUser(Client* c);
