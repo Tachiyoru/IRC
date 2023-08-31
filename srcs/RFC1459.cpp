@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RFC1459.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adegain <adegain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 17:32:17 by adegain           #+#    #+#             */
-/*   Updated: 2023/08/25 15:27:50 by adegain          ###   ########.fr       */
+/*   Updated: 2023/08/31 17:59:55 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,5 @@ void	RFC1459_ERR_NOTREGISTERED(Client* sender)
 
 bool	ensureAuth(Client* c)
 {
-	return (c->_has_pwd() && c->_has_authd());
+	return (c->hasPwd() && c->hasAuthd());
 }
