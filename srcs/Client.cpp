@@ -6,24 +6,25 @@
 /*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:41:30 by adegain           #+#    #+#             */
-/*   Updated: 2023/08/25 14:27:48 by sleon            ###   ########.fr       */
+/*   Updated: 2023/08/25 15:12:50 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Client.hpp"
 
-Client::Client(sockaddr_in const &addr = sockaddr_in(), int sockfd = -1)
-	:  pfd(), has_pwd(false), has_authd(false), nick("*"), user(nick), host(nick), realName(nick)
+Client::Client()
+	: _pfd(), _has_pwd(false), _has_authd(false), _nick("*"), _user(_nick), _host(_nick), _realName(_nick),
+	_addr(), _socket(-1)
 {
-	modes.s = true;
-	modes.i = modes.o = false;
+	_modes.s = true;
+	_modes.i = _modes.o = false;
 }
 
-Client::Client(pollfd* _pfd)
-	: pfd(_pfd), has_pwd(false), has_authd(false), nick("*"), user(nick), host(nick), realName(nick)
+Client::Client(pollfd* pfd)
+	: _pfd(pfd), _has_pwd(false), _has_authd(false), _nick("*"), _user(_nick), _host(_nick), _realName(_nick)
 {
-	modes.s = true;
-	modes.i = modes.o = false;
+	_modes.s = true;
+	_modes.i = _modes.o = false;
 }
 
 Client::~Client()
@@ -41,93 +42,93 @@ void	Client::setSocket(int socket)
 
 pollfd*	Client::getPfd()
 {
-	return pfd;
+	return _pfd;
 }
 
 int	Client::getFd()
 {
-	return pfd->fd;
+	return _pfd->fd;
 }
 
 bool	Client::hasPwd()
 {
-	return has_pwd;
+	return _has_pwd;
 }
 
-void	Client::hasPwd(bool _has_pwd)
+void	Client::hasPwd(bool has_pwd)
 {
-	has_pwd = _has_pwd;
+	_has_pwd = has_pwd;
 }
 
 bool	Client::hasAuthd()
 {
-	return has_authd;
+	return _has_authd;
 }
 
-void	Client::hasAuthd(bool _has_authd)
+void	Client::hasAuthd(bool has_authd)
 {
-	has_authd = _has_authd;
+	_has_authd = has_authd;
 }
 
 string	Client::getNick()
 {
-	return nick;
+	return _nick;
 }
 
-void	Client::setNick(const string& _nick)
+void	Client::setNick(const string& nick)
 {
-	nick = _nick;
+	_nick = nick;
 }
 
 string	Client::getUser()
 {
-	return user;
+	return _user;
 }
 
-void	Client::setUser(const string& _user)
+void	Client::setUser(const string& user)
 {
-	user = _user;
+	_user = user;
 }
 
 string	Client::getHost()
 {
-	return host;
+	return _host;
 }
 
-void	Client::setHost(const string& _host)
+void	Client::setHost(const string& host)
 {
-	host = _host;
+	_host = host;
 }
 
 string	Client::getRealName()
 {
-	return realName;
+	return _realName;
 }
 
-void	Client::setRealName(const string& _real_name)
+void	Client::setRealName(const string& real_name)
 {
-	realName = _real_name;
+	_realName = real_name;
 }
 
 clientMode_t*	Client::getMode()
 {
-	return &modes;
+	return &_modes;
 }
 
 string	Client::getModeString()
 {
 	string	ret = "+";
 
-	if (modes.i)
+	if (_modes.i)
 		ret += "i";
-	if (modes.s)
+	if (_modes.s)
 		ret += "s";
-	if (modes.o)
+	if (_modes.o)
 		ret += "o";
 	return ret;
 }
 
-void	Client::setMode(vector<string>& words)
+// void	Client::setMode(vector<string>& words)
 {
 	size_t			i;
 	parsed_mode_t	pm = parsed_mode(word[1], true);
@@ -141,12 +142,12 @@ void	Client::setMode(vector<string>& words)
 		for (i = 0; i < pm.modes.size(); ++i)
 		{
 			if (pm.modes[i] == 'i')
-				modes.i = pm.sign;
+				_modes.i = pm.sign;
 			else if (pm.modes[i] == 's')
-				modes.s = pm.sign;
+				_modes.s = pm.sign;
 			else if (pm.modes[i] == 'o' && !pm.sign)
 			{
-				modes.o = false;
+				_modes.o = false;
 				changes += pm.modes[i];
 			}
 			if (pm.modes[i] != 'o')

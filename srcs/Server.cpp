@@ -6,7 +6,7 @@
 /*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:55:30 by sleon             #+#    #+#             */
-/*   Updated: 2023/08/25 14:28:10 by sleon            ###   ########.fr       */
+/*   Updated: 2023/08/30 16:10:34 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,120 +19,255 @@
 //                        Constructors / Destructors                          //
 // ************************************************************************** //
 
-Server::Server() : _serverName("Anne.Shan"), _password(), _socket(-1), _pollfds()
+Server::Server() : _serverName("Anne.Shan"), _password(), _socket(-1), _pollfds(),
+	_size(0), _stop(false)
 {}
 
 Server::~Server() {}
 
 // ************************************************************************** //
-//                              Public functions                              //
+//                               Geter functions                              //
 // ************************************************************************** //
 
-
-bool	Server::welcoming()
+int	Server::getPort()
 {
-	sockaddr_in	addr = {};
-	socklen_t	addrlen = sizeof(addr);
-	int			newSocket;
-
-	newSocket = accept(this->_socket, reinterpret_cast<sockaddr *>(&addr), &addrlen);
-	if (newSocket != -1)
-	{
-		_clients.push_back(Client());
-		_clients.back().setAddr(addr);
-		_clients.back().setSocket(newSocket);
-		_clientList.insert(std::pair<std::string, Client *const>(_clients.back().getNick(), &_clients.back()));
-		_pollfds.push_back(pollfd());
-		_pollfds.back().fd = newSocket;
-		_pollfds.back().events = POLLIN | POLLOUT;
-		fcntl(newSocket, F_SETFL, O_NONBLOCK | O_DIRECT);
-		std::cout<<"Connected to server successfully"<<std::endl;
-		return 0;
-	}
+	return this->_port;
 }
 
-bool	Server::run()
+
+std::string	Server::getPassword()
 {
-	g_status = 0;	// std::cout<<"normalement ca tourne"<<std::endl;
-	while (!g_status)
-	{
-		if (!g_status || !this->welcoming())
-		{
-			this->stop();
-			return 1;
-		}
-	}
-	return 0;
+	return this->_password;
 }
 
-void	Server::stop()
+int	Server::getSocket()
 {
-	std::cout<<"Server shutdown initiation"<<std::endl;
-	if (this->_socket != -1)
-		close(this->_socket);
-	this->_socket = 1;
-	g_status = 1;
-	// this->_channelList.clear();
-	this->_clientList.clear();
-	// this->_commandList.clear();
+	return this->_socket;
 }
 
-bool	Server::init(const int port, const std::string password)
+pollfd* Server::getPfd(int i)
 {
-	sockaddr_in addr;
+	if (i < 0 || i >= SOMAXCONN)
+		return NULL;
+	return this->_pollfds +i;
+}
 
-	this->_password = password;
+size_t	Server::getSize()
+{
+	return _size;
+}
+
+bool	Server::getStop()
+{
+	return _stop;
+}
+
+void	Server::setStop(bool stop)
+{
+	_stop = stop;
+}
+
+bool	Server::init(int port, char* password)
+{
+	struct addrinfo hints, *ai, *p;
+	int opt = 1;
+	std::string hostname = "0.0.0.0";
+	stringstream ss;
+	ss << port;
+	string port_str = ss.str();
 	this->_port = port;
-	this->_socket = socket(AF_INET, SOCK_STREAM, 0);
-	if (this->_socket < 0)
-		return (std::cerr<<"Error: socket: creation "<<std::endl, 1);
-	int flags = fcntl(_socket, F_GETFL, 0); //socket non bloquante je sais pas encore si c'est pertinant ou pas
-	if (flags < 0)
+	this->_password = password;
+	bzero(&hints, sizeof(hints));
+	hints.ai_family = AF_INET;
+	hints.ai_socktype = SOCK_STREAM;
+	if ((getaddrinfo(hostname.c_str(), port_str.c_str(), &hints, &ai)) != 0)
 	{
-		this->stop();
-		return (std::cerr<<"Error: socket: fcntl(F_GETFL) call"<<std::endl, 1);
+		std::cerr<<"getaddrinfo failed"<<std::endl;
+		return false;
 	}
-	if (fcntl(_socket, F_SETFL, flags | O_NONBLOCK) < 0)
+	for (p = ai; p != NULL; p = p->ai_next)
 	{
-		this->stop();
-		return (std::cerr<<"Error: socket: fcntl(F_SETFL) call"<<std::endl, 1);
+		if ((_socket = socket(AF_INET, SOCK_STREAM, 0)) < 0)
+		{
+			std::cerr<<"Socket failed"<<std::endl;
+			return false;
+		}
+		if (_socket < 0)
+			continue;
+		if (setsockopt(_socket, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)))
+		{
+			std::cerr<<"Setsockopt Failed"<<std::endl;
+			return false;
+		}
+		if (bind(_socket, p->ai_addr, p->ai_addrlen) < 0)
+		{
+			close(_socket);
+			continue;
+		}
+		break;
 	}
-	addr.sin_addr.s_addr = INADDR_ANY;
-	addr.sin_port = htons(_port);
-	addr.sin_family = AF_INET;
-	if (bind(this->_socket, reinterpret_cast<sockaddr *>(&addr), sizeof(addr)))
-	{
-		this->stop();
-		return (std::cerr<<"Error: socket: bind call"<<std::endl, 1);
-	}
-	if (listen(this->_socket, SOMAXCONN))
-	{
-		this->stop();
-		return (std::cerr<<"Error: socket: listen call"<<std::endl, 1);
-	}
-	pollfd pollfd_1;
-	pollfd_1.fd = this->_socket;
-	pollfd_1.events = POLLIN | POLLOUT;
-	_pollfds.push_back(pollfd_1);
-	// _commandList["PASS"] = &fct_PASS;
-	// _commandList["NICK"] = &fct_NICK;
-	// _commandList["USER"] = &fct_USER;
-	// _commandList["MOTD"] = &fct_MOTD;
-	// _commandList["TIME"] = &fct_TIME;
-	// _commandList["PING"] = &fct_PING;
-	// _commandList["QUIT"] = &fct_QUIT;
-	// _commandList["TOPIC"] = &fct_TOPIC;
-	// _commandList["NAMES"] = &fct_NAMES;
-	// _commandList["JOIN"] = &fct_JOIN;
-	// _commandList["PART"] = &fct_PART;
-	// _commandList["MODE"] = &fct_MODE;
-	// _commandList["OPER"] = &fct_OPER;
-	// _commandList["KILL"] = &fct_KILL;
-	// _commandList["KICK"] = &fct_KICK;
-	// _commandList["PRIVMSG"] = &fct_PRIVMSG;
-	// _commandList["NOTICE"] = &fct_NOTICE;
-	// _commandList["INVITE"] = &fct_INVITE;
-	// _commandList["LIST"] = &fct_LIST;
-	return 0;
+	freeaddrinfo(ai);
+	if (p == NULL)
+		return false;
+
+	SERVER_ASSERT(listen(_socket, SOMAXCONN));
+	_pollfds[_size].fd = _socket;
+	_pollfds[_size].events = POLLIN;
+	_size++;
+
+	// _cmdsList["PASS"] = &RFC1459_PASS;
+	// _cmdsList["NICK"] = &RFC1459_NICK;
+	// _cmdsList["USER"] = &RFC1459_USER;
+	// _cmdsList["MOTD"] = &RFC1459_MOTD;
+	// _cmdsList["TIME"] = &RFC1459_TIME;
+	// _cmdsList["PING"] = &RFC1459_PING;
+	// _cmdsList["QUIT"] = &RFC1459_QUIT;
+	// _cmdsList["TOPIC"] = &RFC1459_TOPIC;
+	// _cmdsList["NAMES"] = &RFC1459_NAMES;
+	// _cmdsList["JOIN"] = &RFC1459_JOIN;
+	// _cmdsList["PART"] = &RFC1459_PART;
+	// _cmdsList["MODE"] = &RFC1459_MODE;
+	// _cmdsList["OPER"] = &RFC1459_OPER;
+	// _cmdsList["KILL"] = &RFC1459_KILL;
+	// _cmdsList["KICK"] = &RFC1459_KICK;
+	// _cmdsList["PRIVMSG"] = &RFC1459_PRIVMSG;
+	// _cmdsList["NOTICE"] = &RFC1459_NOTICE;
+	// _cmdsList["INVITE"] = &RFC1459_INVITE;
+	// _cmdsList["LIST"] = &RFC1459_LIST;
+
+	return true;
 }
 
+void	Server::acceptClient()
+{
+	if (_size + 1 >= SOMAXCONN)
+	{
+		std::cerr<<_serverName<<": cannot accept another client"<<std::endl;
+		return;
+	}
+	_pollfds[_size].fd = accept(_socket, NULL, NULL);
+	if (_pollfds[_size].fd == -1)
+	{
+		std::cerr<<_serverName<<": could not accept client"<<std::endl;
+		return;
+	}
+	std::cout<<_serverName<<": connection accepted"<<_pollfds[_size].fd<<std::endl;
+	_pollfds[_size].events = POLLIN;
+	_clientList[_pollfds[_size].fd] = new Client(_pollfds + _size);
+	++_size;
+}
+
+void	Server::handleRequest(pollfd* pfd)
+{
+	int		retval;
+	char	buf[RFC1459_MAX];
+	vector<string>	cmdvec;
+	parsedCmd_t		parsed;
+	size_t			i;
+	static string	bufs[SOMAXCONN];
+	bzero(buf, sizeof(buf));
+
+	retval = recv(pfd->fd, buf, sizeof(buf), 0);
+	if (retval == -1)
+		return;
+	else if (!retval)
+	{
+		disconnectClient(pfd);
+		return;
+	}
+
+	bufs[pfd->fd] += buf;
+	if (bufs[pfd->fd].find(RFC1459_END) == std::npos)
+		return;
+
+	cout<<"("<<pfd->fd<<") received :\n"<<bufs[pfd->fd]<<std::endl<<std::endl;
+
+// get and iterate received commands
+	cmdvec = split(bufs[pfd->fd], RFC1459_END);
+	bufs[pfd->fd].clear();
+	for (i = 0; i < cmdvec.size(); ++i)
+	{
+		parsed = parse(cmdvec[i]);
+		if (_cmdsList.count(parsed.cmd) == 0)
+			;
+		else
+			_cmdsList[parsed.cmd](_clientList[pfd->fd], parsed);
+	}
+}
+
+void	Server::disconnectClient(pollfd *pfd)
+{
+	map<std::string, Channel*>*				channels = server->getChannelList();
+	map<std::string, Channel*>::iterator	it;
+	parsedCmd_t								pc;
+	std::string								pc_word;
+
+	if (pfd->fd != -1 && _clientList.count(pfd->fd) != 0)
+	{
+		std::cout<<_serverName<<": lost connection "<< pfd->fd<<std::endl;
+		for (it = _channelList.begin(); it != _channelList.end(); it++)
+		{
+			if (it->second->isConnected(_clientList[pfd->fd]))
+			{
+				pc_word += it->second->getName();
+				pc_word += ",";
+			}
+		}
+		pc.has_words = true;
+		pc.words.push_back(pc_word);
+		RFC1459_PART(_clientList[pfd->fd], pc);
+		delete _clientList[pfd->fd];
+		_clientList.erase(pfd->fd);
+		close(pfd->fd);
+		pfd->fd = -1;
+	}
+}
+
+void	Server::sendString(Client *c, const std::string &a)
+{
+	std::cout<<"("<<c->getFd()<<") "<<"sent:\n"<<a<<std::endl;
+	send(c->getFd(), a.c_str(), a.size(), 0);
+}
+
+Client*	Server::findClient(std::string name)
+{
+	map<int, Client*>::iterator	it;
+
+	for (it = _clientList.begin(); it != _clientList.end(); ++it)
+	{
+		if (it->second->getNick() == name)
+			return it->second;
+	}
+	return NULL;
+}
+
+Channel* Server::findChannel(std::string name)
+{
+	map<std::string, Channel*>::iterator	it;
+
+	for (it = _channelList.begin(); it != _channelList.end(); ++it)
+	{
+		if (it->second->getName() == name)
+			return it->second;
+	}
+	return NULL;
+}
+
+Channel* Server::createChannel(std::string name, Channel* ins, Client* owner)
+{
+	_channelList[name] = ins;
+	ins->addOperator(owner);
+	return ins;
+}
+
+map<std::string, Channel*>* Server::getChannelList()
+{
+	return &_channelList;
+}
+
+map<int, Client*>* Server::getClientList()
+{
+	return &_clientList;
+}
+
+Server* server;
