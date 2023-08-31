@@ -6,7 +6,7 @@
 /*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:55:30 by sleon             #+#    #+#             */
-/*   Updated: 2023/08/30 16:10:34 by sleon            ###   ########.fr       */
+/*   Updated: 2023/08/31 13:54:30 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ void	Server::handleRequest(pollfd* pfd)
 	}
 
 	bufs[pfd->fd] += buf;
-	if (bufs[pfd->fd].find(RFC1459_END) == std::npos)
+	if (bufs[pfd->fd].find(RFC1459_END) == std::string::npos)
 		return;
 
 	cout<<"("<<pfd->fd<<") received :\n"<<bufs[pfd->fd]<<std::endl<<std::endl;
