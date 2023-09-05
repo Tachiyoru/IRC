@@ -9,7 +9,7 @@ NAME="Bot"
 CHAN="#RockPaperScissors"
 
 if [ "$#" -ne 3]; then
-	echo "Please launche the bot by using : 'sh $0 <host> <port> <password>'"
+	echo "Please launch the bot by using : 'sh $0 <host> <port> <password>'"
 	exit 1
 fi
 
