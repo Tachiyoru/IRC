@@ -6,7 +6,7 @@
 /*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:19:51 by adegain           #+#    #+#             */
-/*   Updated: 2023/09/15 18:21:59 by sleon            ###   ########.fr       */
+/*   Updated: 2023/09/15 22:21:38 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -325,8 +325,7 @@ void	Channel::setMode(Client* sender, const string& cmd_name, vector<string>& wo
 		changes += pm.modes;
 		args.push_back(changes);
 		broadcast(format(RPL_CHANNEL_MODE, args), NULL);
-	}voiced
-voiced
+	}
 }
 
 void	Channel::disconnectUser(Client* c)

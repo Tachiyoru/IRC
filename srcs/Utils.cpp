@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adegain <adegain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 16:24:34 by adegain           #+#    #+#             */
-/*   Updated: 2023/08/17 17:25:58 by adegain          ###   ########.fr       */
+/*   Updated: 2023/09/15 22:19:04 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ parsedCmd_t	parse(const string& s)
 	ret.has_suffix = (vec.size() == 1) ? false : true;
 	if (ret.has_suffix)
 		ret.suffix = vec[1];
-	
+
 	vec = split(vec[0], " ");
 	ret.cmd = vec[0];
 	for (size_t i = 0; i < ret.cmd.size(); i++)
@@ -185,7 +185,7 @@ parsedMode_t	parse_mode(string s, bool for_client)
 		s.erase(0, 1);
 	if (s.empty())
 		return ret;
-	
+
 	pos = s.find_first_not_of(bad);
 	if (pos != string::npos)
 	{

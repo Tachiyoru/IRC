@@ -6,7 +6,7 @@
 /*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:41:30 by adegain           #+#    #+#             */
-/*   Updated: 2023/08/25 15:12:50 by sleon            ###   ########.fr       */
+/*   Updated: 2023/09/15 22:20:42 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,15 +128,15 @@ string	Client::getModeString()
 	return ret;
 }
 
-// void	Client::setMode(vector<string>& words)
+void	Client::setMode(vector<string>& words)
 {
 	size_t			i;
-	parsedMode_t	pm = parsed_mode(word[1], true);
+	parsedMode_t	pm = parse_mode(words[1], true);
 	vector<string>	args;
 	string			changes = pm.sign ? "+" : "-";
 
 	if (!pm.valid)
-		RFC1459_ERR_UNKNOWNMODE(this, pm.invalid_mode);
+		RFC1459_ERR_UNKNOWNMODE(this, pm.invalidMode);
 	else
 	{
 		for (i = 0; i < pm.modes.size(); ++i)
@@ -155,8 +155,8 @@ string	Client::getModeString()
 		}
 		if (changes.size() - 1)
 		{
-			args.push_back(nick);
-			args.push_back(nick);
+			args.push_back(_nick);
+			args.push_back(_nick);
 			args.push_back(changes);
 			server->sendString(this, format(RPL_USER_MODE, args));
 		}

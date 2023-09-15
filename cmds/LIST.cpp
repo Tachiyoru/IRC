@@ -6,14 +6,14 @@
 /*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 15:51:58 by adegain           #+#    #+#             */
-/*   Updated: 2023/09/15 18:21:40 by sleon            ###   ########.fr       */
+/*   Updated: 2023/09/15 19:17:49 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/Server.hpp"
-#include "../inc/Channel.hpp"
-#include "../inc/Client.hpp"
-#include "../inc/Utils.hpp"
+#include "Server.hpp"
+#include "Channel.hpp"
+#include "Client.hpp"
+#include "Utils.hpp"
 
 void	RFC1459_LIST(Client* sender, parsedCmd_t& pcmd)
 {

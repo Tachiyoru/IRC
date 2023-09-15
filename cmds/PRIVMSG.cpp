@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   PRIVMSG.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adegain <adegain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 15:26:41 by adegain           #+#    #+#             */
-/*   Updated: 2023/08/31 16:06:33 by adegain          ###   ########.fr       */
+/*   Updated: 2023/09/15 19:17:49 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/RFC1459.hpp"
-#include "../inc/Server.hpp"
-#include "../inc/Channel.hpp"
-#include "../inc/Client.hpp"
-#include "../inc/Utils.hpp"
+#include "RFC1459.hpp"
+#include "Server.hpp"
+#include "Channel.hpp"
+#include "Client.hpp"
+#include "Utils.hpp"
 
 static bool	has_duplicate_recipient(const vector<string>& rec, string& dup)
 {
@@ -45,7 +45,7 @@ void	RFC1459_PRIVMSG(Client* sender, parsedCmd_t& pc)
 	size_t			i;
 	Channel*		chan;
 	Client*			cli;
-	
+
 	if (!pc.has_words)
 		server->sendString(sender, format(ERR_NORECIPIENT, args));
 	else if (!pc.has_suffix)
