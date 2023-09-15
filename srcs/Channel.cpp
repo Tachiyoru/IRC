@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adegain <adegain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:19:51 by adegain           #+#    #+#             */
-/*   Updated: 2023/08/25 15:37:22 by adegain          ###   ########.fr       */
+/*   Updated: 2023/09/15 18:21:59 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -336,7 +336,7 @@ void	Channel::disconnectUser(Client* c)
 	removeVoiced(c);
 	if (!getSize())
 	{
-		server->getChannels()->erase(_name); // ---------------------------------------> a verifier
+		server->getChannelList()->erase(_name); // ---------------------------------------> a verifier
 		delete this;
 	}
 }

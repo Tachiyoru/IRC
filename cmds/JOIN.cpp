@@ -6,14 +6,14 @@
 /*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:18:46 by sleon             #+#    #+#             */
-/*   Updated: 2023/09/12 11:53:23 by sleon            ###   ########.fr       */
+/*   Updated: 2023/09/15 18:21:00 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/RFC1459.hpp"
 #include "../inc/Server.hpp"
 
-void	RFC1459_JOIN(Client *sender, parsedCmd_t &pc)
+void	RFC1459_JOIN(Client *sender, parsedCmd_t &pcmd)
 {
 	if (!ensureAuth(sender))
 	{
@@ -25,16 +25,16 @@ void	RFC1459_JOIN(Client *sender, parsedCmd_t &pc)
 	vector<string>	canals, key;
 	Channel			*chan;
 	channelMode_t	*cm;
-	parsedCmd_t		pc2;
+	parsedCmd_t		pcmd2;
 
-	if (!pc.has_words)
+	if (!pcmd.has_words)
 	{
 		RFC1459_ERR_NEEDMOREPARAMS(sender, cmd_name);
 		return;
 	}
-	canals = split(pc.words[0], ",");
-	if (pc.words.size() > 1)
-		key = split(pc.words[0], ",");
+	canals = split(pcmd.words[0], ",");
+	if (pcmd.words.size() > 1)
+		key = split(pcmd.words[0], ",");
 	while (key.size() < canals.size())
 		key.push_back("");
 
@@ -77,12 +77,12 @@ void	RFC1459_JOIN(Client *sender, parsedCmd_t &pc)
 		args.push_back(sender->getHost());
 		args.push_back(canals[i]);
 		chan->broadcast(format(RPL_JOIN, args), NULL);
-		pc2.has_words = true;
-		pc2.words.clear();
-		pc2.words.push_back(canals[i]);
-		pc2.has_suffix = false;
+		pcmd2.has_words = true;
+		pcmd2.words.clear();
+		pcmd2.words.push_back(canals[i]);
+		pcmd2.has_suffix = false;
 		if (!chan->getTopic().empty())
-			RFC1459_TOPIC(sender, pc2);
-		RFC1459_NAMES(sender, pc2);
+			RFC1459_TOPIC(sender, pcmd2);
+		RFC1459_NAMES(sender, pcmd2);
 	}
 }
