@@ -6,12 +6,13 @@
 /*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 17:28:26 by sleon             #+#    #+#             */
-/*   Updated: 2023/09/18 17:44:02 by sleon            ###   ########.fr       */
+/*   Updated: 2023/09/18 18:38:41 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "RFC1459.hpp"
 #include "Server.hpp"
+#include "Utils.hpp"
 
 static bool is_channel_visible(Channel* chan, Client* cli)
 {

@@ -6,30 +6,29 @@
 /*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:37:45 by adegain           #+#    #+#             */
-/*   Updated: 2023/08/31 17:55:49 by sleon            ###   ########.fr       */
+/*   Updated: 2023/09/18 19:32:22 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SERVER_HPP
 # define SERVER_HPP
 
-# include <iostream>
-# include <stdint.h>
-# include <string>
-# include <strings.h>
-# include <sys/types.h>
-# include <sys/socket.h>
-# include <unistd.h>
-# include <netinet/in.h>
-# include <sys/poll.h>
-# include <map>
-# include <netdb.h>
-# include <sstream>
-# include "Channel.hpp"
-# include "Client.hpp"
-# include "Utils.hpp"
-# include <sys/poll.h>
-# include <netdb.h>
+#include <iostream>
+#include <stdint.h>
+#include <string>
+#include <strings.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <unistd.h>
+#include <netinet/in.h>
+#include <sys/poll.h>
+#include <map>
+#include "Utils.hpp"
+#include "RFC1459.hpp"
+#include "Client.hpp"
+#include "Channel.hpp"
+#include <netdb.h>
+#include <sstream>
 
 #define SERVER_ASSERT(cond) if ((cond) == -1)    return false
 #define SERVER_NAME "Anne.Shan"
@@ -55,7 +54,7 @@ class Server
 		std::map<std::string , Channel *>				_channelList;
 
 	public:
-		Server();
+		Server(int	_port, std::string _password);
 		~Server();
 
 		int												getPort();

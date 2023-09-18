@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   RFC1459.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adegain <adegain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 16:12:43 by adegain           #+#    #+#             */
-/*   Updated: 2023/08/25 14:25:57 by adegain          ###   ########.fr       */
+/*   Updated: 2023/09/18 19:25:56 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RFC1459_HPP
 #define RFC1459_HPP
 
-#include "Server.hpp"
 #include "Client.hpp"
 #include "Utils.hpp"
 #include <iostream>
@@ -112,7 +111,7 @@
 typedef void(*cmd_t)(Client*, parsedCmd_t&);
 
 /*
-    Les wrappers pour les différentes réponses des commandes qui sont 
+    Les wrappers pour les différentes réponses des commandes qui sont
     utilisées assez fréquemment.
 */
 void	RFC1459_ERR_NEEDMOREPARAMS(Client* sender, const string& command);
@@ -131,25 +130,25 @@ bool	ensureAuth(Client* c);
 /*
     Les commandes demandées par le sujet.
 */
-void	RFC1459_PASS(Client* sender, parsedCmd_t& pc);
-void	RFC1459_NICK(Client* sender, parsedCmd_t& pc);
-void	RFC1459_USER(Client* sender, parsedCmd_t& pc);
-void	RFC1459_MOTD(Client* sender, parsedCmd_t& pc);
-void	RFC1459_TIME(Client* sender, parsedCmd_t& pc);
-void	RFC1459_PING(Client* sender, parsedCmd_t& pc);
-void	RFC1459_QUIT(Client* sender, parsedCmd_t& pc);
-void	RFC1459_TOPIC(Client* sender, parsedCmd_t& pc);
-void	RFC1459_NAMES(Client* sender, parsedCmd_t& pc);
-void	RFC1459_JOIN(Client* sender, parsedCmd_t& pc);
-void	RFC1459_PART(Client* sender, parsedCmd_t& pc);
-void	RFC1459_MODE(Client* sender, parsedCmd_t& pc);
-void	RFC1459_OPER(Client* sender, parsedCmd_t& pc);
-void	RFC1459_KILL(Client* sender, parsedCmd_t& pc);
-void	RFC1459_KICK(Client* sender, parsedCmd_t& pc);
-void	RFC1459_PRIVMSG(Client* sender, parsedCmd_t& pc);
-void	RFC1459_NOTICE(Client* sender, parsedCmd_t& pc);
-void	RFC1459_INVITE(Client* sender, parsedCmd_t& pc);
-void	RFC1459_LIST(Client* sender, parsedCmd_t& pc);
+void	RFC1459_PASS(Client* sender, parsedCmd_t &pcmd);
+void	RFC1459_NICK(Client* sender, parsedCmd_t &pcmd);
+void	RFC1459_USER(Client* sender, parsedCmd_t &pcmd);
+void	RFC1459_MOTD(Client* sender, parsedCmd_t &pcmd);
+void	RFC1459_TIME(Client* sender, parsedCmd_t &pcmd);
+void	RFC1459_PING(Client* sender, parsedCmd_t &pcmd);
+void	RFC1459_QUIT(Client* sender, parsedCmd_t &pcmd);
+void	RFC1459_TOPIC(Client* sender, parsedCmd_t &pcmd);
+void	RFC1459_NAMES(Client* sender, parsedCmd_t &pcmd);
+void	RFC1459_JOIN(Client* sender, parsedCmd_t &pcmd);
+void	RFC1459_PART(Client* sender, parsedCmd_t &pcmd);
+void	RFC1459_MODE(Client* sender, parsedCmd_t &pcmd);
+void	RFC1459_OPER(Client* sender, parsedCmd_t &pcmd);
+void	RFC1459_KILL(Client* sender, parsedCmd_t &pcmd);
+void	RFC1459_KICK(Client* sender, parsedCmd_t &pcmd);
+void	RFC1459_PRIVMSG(Client* sender, parsedCmd_t &pcmd);
+void	RFC1459_NOTICE(Client* sender, parsedCmd_t &pcmd);
+void	RFC1459_INVITE(Client* sender, parsedCmd_t &pcmd);
+void	RFC1459_LIST(Client* sender, parsedCmd_t &pcmd);
 
 
 #endif

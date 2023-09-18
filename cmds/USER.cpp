@@ -6,12 +6,13 @@
 /*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 19:17:23 by sleon             #+#    #+#             */
-/*   Updated: 2023/09/15 22:13:21 by sleon            ###   ########.fr       */
+/*   Updated: 2023/09/18 18:39:01 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "RFC1459.hpp"
 #include "Server.hpp"
+#include "Utils.hpp"
 
 void	RFC1459_USER(Client *sender, parsedCmd_t &pcmd)
 {

@@ -6,11 +6,12 @@
 /*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 17:01:33 by sleon             #+#    #+#             */
-/*   Updated: 2023/09/16 17:35:03 by sleon            ###   ########.fr       */
+/*   Updated: 2023/09/18 18:38:51 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "RFC1459.hpp"
+#include "Utils.hpp"
 #include "Server.hpp"
 
 void RFC1459_PING(Client* sender, parsedCmd_t& pcmd)

@@ -3,23 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adegain <adegain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 13:52:25 by adegain           #+#    #+#             */
-/*   Updated: 2023/08/25 15:34:46 by adegain          ###   ########.fr       */
+/*   Updated: 2023/09/18 19:19:23 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CHANNEL_HPP
 #define CHANNEL_HPP
 
-#include "Server.hpp"
-#include "Client.hpp"
-#include "Utils.hpp"
 #include <string>
-#include <sstream>
-#include <cstdlib>
 #include <map>
+#include "Client.hpp"
 
 using namespace std;
 

@@ -6,54 +6,72 @@
 /*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 13:39:25 by adegain           #+#    #+#             */
-/*   Updated: 2023/08/31 17:56:04 by sleon            ###   ########.fr       */
+/*   Updated: 2023/09/18 19:40:10 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <iostream>
+#include <cstdlib>
 #include "Server.hpp"
-#include <stdlib.h>
 #include <signal.h>
 
-bool	g_stqtus = 0;
-
-bool	checkPort(std::string str, int value)
+static void sighandler(int sig)
 {
-	std::string::const_iterator	it;
-
-	for (it = str.begin(); it != str.end(); ++it)
-	{
-		if (!isdigit(*it))
-		{
-			std::cerr<<"error: port: nondigit value"<<std::endl;
-			return false;
-		}
-	}
-	if ((value >= 0 && value < 1024) || value > 65535)
-	{
-		std::cerr<<"error: port: out of range"<<std::endl;
-		return false;
-	}
-	return true;
+	if (sig == SIGINT)
+		server->setStop(true);
 }
 
-void	sigHandler(int sig)
+int main(int ac, const char* const av[])
 {
-	if (sig == SIGINT){
-		g_status = 1;
-		exit(4);
+	size_t cpy, i;
+	pollfd* pfd;
+
+	if (ac != 3)
+	{
+		cerr << "usage: ./" << SERVER_NAME << " <port> <password>" << endl;
+		return 1;
 	}
-}
-
-int	main(int argc, char** argv)
-{
-	Server		server;
-
-	if (argc != 3)
-		return(std::cerr<<"Irc should run as : ./ircserv <port> <password>"<<std::endl, 1);
-	if (!checkPort(argv[1], atoi(argv[1])))
+	int value = strtol(av[1], NULL, 10);
+	if (value < 1024 || value > 65535) {
+		std::cout << "ERROR: INVALID PORT VALUE" << std::endl;
 		return 2;
-	signal(SIGINT, sigHandler);
-	if (server.init(atoi(argv[1]), argv[2]))
-		return 3;
+	}
+	server = new Server((uint16_t)atoi(av[1]), av[2]);
 
+	if (!server->start())
+	{
+		cerr << SERVER_NAME << ": could not start server" << endl;
+		delete server;
+		return 3;
+	}
+	else
+	{
+		cout << SERVER_NAME << ": server started" << endl;
+		signal(SIGINT, &sighandler);
+		while (!server->getStop())
+		{
+			cpy = server->getSize();
+
+			if (poll(server->getPfd(0), cpy, 0) == -1)
+				break;
+
+			for (i = 0; i < cpy; ++i)
+			{
+				pfd = server->getPfd((int)i);
+
+				if (!pfd || pfd->fd == -1 || pfd->revents != POLLIN)
+					continue;
+
+				if (pfd->fd == server->getSocket())
+					server->acceptClient();
+				else
+				{
+					server->handleRequest(pfd);
+				}
+			}
+		}
+		cout << SERVER_NAME << ": server stopped" << endl;
+	}
+	delete server;
+	return 0;
 }

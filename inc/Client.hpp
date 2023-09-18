@@ -6,17 +6,15 @@
 /*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:29:27 by adegain           #+#    #+#             */
-/*   Updated: 2023/08/25 15:11:33 by sleon            ###   ########.fr       */
+/*   Updated: 2023/09/18 19:41:57 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CLIENT_HPP
 #define CLIENT_HPP
 
-#include <string>
-#include <vector>
-#include <iostream>
-#include "Server.hpp"
+# include <string>
+# include <vector>
 
 using namespace std;
 

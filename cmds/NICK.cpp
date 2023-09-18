@@ -6,12 +6,13 @@
 /*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 15:10:07 by sleon             #+#    #+#             */
-/*   Updated: 2023/09/16 17:01:14 by sleon            ###   ########.fr       */
+/*   Updated: 2023/09/18 18:38:43 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "RFC1459.hpp"
 #include "Server.hpp"
+#include "Utils.hpp"
 
 static bool	is_valid_nick(const string &s)
 {

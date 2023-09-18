@@ -6,7 +6,7 @@
 /*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:55:30 by sleon             #+#    #+#             */
-/*   Updated: 2023/08/31 13:55:38 by sleon            ###   ########.fr       */
+/*   Updated: 2023/09/18 19:39:27 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,28 @@
 //                        Constructors / Destructors                          //
 // ************************************************************************** //
 
-Server::Server() : _serverName("Anne.Shan"), _password(), _socket(-1), _pollfds(),
-	_size(0), _stop(false)
-{}
+Server::Server(int port, string pwd) : _password(pwd), _port(port), _socket(-1), _size(0), _stop(false)
+{
+	bzero(_pollfds, sizeof(_pollfds));
+}
 
-Server::~Server() {}
+Server::~Server()
+{
+	size_t i;
+	map<string, Channel*>::iterator it;
+
+	// close server
+	close(_pollfds[0].fd);
+	_pollfds[0].fd = -1;
+
+	// close clients
+	for (i = 1; i < _size; ++i)
+		disconnectClient(_pollfds + i);
+
+	// close channels
+	for (it = _channelList.begin(); it != _channelList.end(); ++it)
+		delete it->second;
+}
 
 // ************************************************************************** //
 //                               Geter functions                              //
@@ -197,7 +214,7 @@ void	Server::handleRequest(pollfd* pfd)
 
 void	Server::disconnectClient(pollfd *pfd)
 {
-	map<std::string, Channel*>*				channels = server->getChannelList();
+	map<std::string, Channel*>				*channelList = server->getChannelList();
 	map<std::string, Channel*>::iterator	it;
 	parsedCmd_t								pc;
 	std::string								pc_word;
@@ -205,7 +222,7 @@ void	Server::disconnectClient(pollfd *pfd)
 	if (pfd->fd != -1 && _clientList.count(pfd->fd) != 0)
 	{
 		std::cout<<_serverName<<": lost connection "<< pfd->fd<<std::endl;
-		for (it = _channelList.begin(); it != _channelList.end(); it++)
+		for (it = channelList->begin(); it != channelList->end(); it++)
 		{
 			if (it->second->isConnected(_clientList[pfd->fd]))
 			{
