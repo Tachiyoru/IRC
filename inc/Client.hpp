@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: adegain <adegain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:29:27 by adegain           #+#    #+#             */
-/*   Updated: 2023/09/18 19:41:57 by sleon            ###   ########.fr       */
+/*   Updated: 2023/09/19 16:44:49 by adegain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <string>
 # include <vector>
+#include <iostream>
+#include "Server.hpp"
 
 using namespace std;
 

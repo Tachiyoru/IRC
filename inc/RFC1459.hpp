@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RFC1459.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: adegain <adegain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 16:12:43 by adegain           #+#    #+#             */
-/*   Updated: 2023/09/18 19:25:56 by sleon            ###   ########.fr       */
+/*   Updated: 2023/09/19 16:49:44 by adegain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 #include "Client.hpp"
 #include "Utils.hpp"
 #include <iostream>
+#include <string>
+#include "Server.hpp"
+
+class Client;
 
 #define	RFC1459_MAX             512
 #define RFC1459_END             "\x0D\x0A"
@@ -109,6 +113,7 @@
 #define REGISTER_COMMAND(n, s)  string cmd_name = (n); REGISTER_REPLY(s);
 
 typedef void(*cmd_t)(Client*, parsedCmd_t&);
+
 
 /*
     Les wrappers pour les différentes réponses des commandes qui sont

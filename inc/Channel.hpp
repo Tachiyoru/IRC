@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: adegain <adegain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 13:52:25 by adegain           #+#    #+#             */
-/*   Updated: 2023/09/18 19:19:23 by sleon            ###   ########.fr       */
+/*   Updated: 2023/09/19 16:44:28 by adegain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 #include <string>
 #include <map>
 #include "Client.hpp"
+#include "Server.hpp"
+#include <sstream>
+#include <cstdlib>
 
 using namespace std;
 

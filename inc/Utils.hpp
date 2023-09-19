@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Utils.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: adegain <adegain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 16:14:53 by adegain           #+#    #+#             */
-/*   Updated: 2023/09/18 19:18:40 by sleon            ###   ########.fr       */
+/*   Updated: 2023/09/19 16:49:06 by adegain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,12 @@
 
 # include <vector>
 # include <string>
-
+#include <strings.h>
+#include <iostream>
+#include "RFC1459.hpp"
+#include <sstream>
+#include <iomanip>
+#include <ctime>
 
 
 using namespace std;
