@@ -6,7 +6,7 @@
 /*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:55:30 by sleon             #+#    #+#             */
-/*   Updated: 2023/09/18 19:39:27 by sleon            ###   ########.fr       */
+/*   Updated: 2023/09/22 16:34:36 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,16 +84,14 @@ void	Server::setStop(bool stop)
 	_stop = stop;
 }
 
-bool	Server::init(int port, char* password)
+bool	Server::start()
 {
 	struct addrinfo hints, *ai, *p;
 	int opt = 1;
 	std::string hostname = "0.0.0.0";
 	stringstream ss;
-	ss << port;
+	ss << _port;
 	string port_str = ss.str();
-	this->_port = port;
-	this->_password = password;
 	bzero(&hints, sizeof(hints));
 	hints.ai_family = AF_INET;
 	hints.ai_socktype = SOCK_STREAM;

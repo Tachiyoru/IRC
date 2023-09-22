@@ -6,7 +6,7 @@
 /*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:37:45 by adegain           #+#    #+#             */
-/*   Updated: 2023/09/22 14:53:51 by sleon            ###   ########.fr       */
+/*   Updated: 2023/09/22 16:34:10 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,8 @@
 
 class Client;
 class Channel;
-
-
-bool	g_status;
+struct parsedCmd_t;
+typedef void(*cmd_t)(Client*, parsedCmd_t&);
 
 class Server
 {

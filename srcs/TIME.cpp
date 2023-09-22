@@ -6,7 +6,7 @@
 /*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 22:14:26 by sleon             #+#    #+#             */
-/*   Updated: 2023/09/18 18:38:59 by sleon            ###   ########.fr       */
+/*   Updated: 2023/09/22 16:31:28 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "Server.hpp"
 #include "Utils.hpp"
 
-void	RFC1459_TIME(Client *sender, parsedCmd_t pcmd)
+void	RFC1459_TIME(Client *sender, parsedCmd_t &pcmd)
 {
 	if (!ensureAuth(sender))
 	{
