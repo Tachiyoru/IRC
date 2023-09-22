@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   RFC1459.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adegain <adegain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 16:12:43 by adegain           #+#    #+#             */
-/*   Updated: 2023/09/19 16:49:44 by adegain          ###   ########.fr       */
+/*   Updated: 2023/09/22 14:04:55 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#pragma once
 
 #ifndef RFC1459_HPP
 #define RFC1459_HPP
@@ -20,6 +22,9 @@
 #include "Server.hpp"
 
 class Client;
+struct parsedCmd_t;
+using namespace std;
+
 
 #define	RFC1459_MAX             512
 #define RFC1459_END             "\x0D\x0A"

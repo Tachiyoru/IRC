@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adegain <adegain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:29:27 by adegain           #+#    #+#             */
-/*   Updated: 2023/09/19 16:44:49 by adegain          ###   ########.fr       */
+/*   Updated: 2023/09/22 13:52:57 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#pragma once
 
 #ifndef CLIENT_HPP
 #define CLIENT_HPP

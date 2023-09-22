@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   Utils.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adegain <adegain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 16:14:53 by adegain           #+#    #+#             */
-/*   Updated: 2023/09/19 16:49:06 by adegain          ###   ########.fr       */
+/*   Updated: 2023/09/22 14:04:28 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#pragma once
 
 #ifndef UTILS_HPP
 # define UTILS_HPP
@@ -25,7 +27,7 @@
 
 using namespace std;
 
-typedef struct parsedCmd_s
+typedef struct parsedCmd_t
 {
 	string			cmd;
 	bool			has_words;

@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adegain <adegain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 13:52:25 by adegain           #+#    #+#             */
-/*   Updated: 2023/09/19 16:44:28 by adegain          ###   ########.fr       */
+/*   Updated: 2023/09/22 14:39:51 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#pragma once
 
 #ifndef CHANNEL_HPP
 #define CHANNEL_HPP
@@ -21,6 +23,7 @@
 #include <cstdlib>
 
 using namespace std;
+class Client;
 
 typedef struct channelMode_s
 {

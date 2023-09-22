@@ -6,9 +6,11 @@
 /*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:37:45 by adegain           #+#    #+#             */
-/*   Updated: 2023/09/18 19:32:22 by sleon            ###   ########.fr       */
+/*   Updated: 2023/09/22 14:53:51 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#pragma once
 
 #ifndef SERVER_HPP
 # define SERVER_HPP
@@ -35,6 +37,7 @@
 
 class Client;
 class Channel;
+
 
 bool	g_status;
 
