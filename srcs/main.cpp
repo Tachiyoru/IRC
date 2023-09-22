@@ -6,7 +6,7 @@
 /*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 13:39:25 by adegain           #+#    #+#             */
-/*   Updated: 2023/09/18 19:40:10 by sleon            ###   ########.fr       */
+/*   Updated: 2023/09/22 17:36:03 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int main(int ac, const char* const av[])
 
 	if (ac != 3)
 	{
-		cerr << "usage: ./" << SERVER_NAME << " <port> <password>" << endl;
+		cerr << "usage: ./ircserv <port> <password>" << endl;
 		return 1;
 	}
 	int value = strtol(av[1], NULL, 10);
@@ -61,7 +61,6 @@ int main(int ac, const char* const av[])
 
 				if (!pfd || pfd->fd == -1 || pfd->revents != POLLIN)
 					continue;
-
 				if (pfd->fd == server->getSocket())
 					server->acceptClient();
 				else
