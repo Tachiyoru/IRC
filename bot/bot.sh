@@ -8,7 +8,7 @@ PASS="$3"
 NAME="Bot"
 CHAN="#RockPaperScissors"
 
-if [ "$#" -ne 3]; then
+if [ "$#" -ne 3 ]; then
 	echo "Please launch the bot by using : 'sh $0 <host> <port> <password>'"
 	exit 1
 fi
@@ -25,9 +25,9 @@ log_n_join > $input
 trap "rm -f $input;exit 0" INT TERM EXIT
 tail -f $input | nc $HOST $PORT | while read line; do
 	if (echo "$line" | grep "PRIVMSG ${CHAN}"); then
-		RANDOM = $(shuf -i 0-999 -n1)
-		rps = $((1 + RANDOM % 3))
-		if ["$rps" -eq 1]; then
+		RANDOM=$(shuf -i 0-999 -n1)
+		rps=$((1 + RANDOM % 3))
+		if [ "$rps" -eq 1 ]; then
 			printf "NOTICE ${CHAN} :ROCK\r\n" >> $input
 			if (echo "$line" | grep "ROCK" >> /dev/null); then
 				printf "NOTICE ${CHAN} :It's a tie\r\n" >> $input
@@ -38,7 +38,7 @@ tail -f $input | nc $HOST $PORT | while read line; do
 			else
 				printf "NOTICE ${CHAN} :Do you really know the rules ?\r\n" >> $input
 			fi
-		if ["$rps" -eq 2]; then
+		elif [ "$rps" -eq 2 ]; then
 			printf "NOTICE ${CHAN} :PAPER\r\n" >> $input
 			if (echo "$line" | grep "ROCK" >> /dev/null); then
 				printf "NOTICE ${CHAN} :Nice you won\r\n" >> $input
@@ -49,7 +49,7 @@ tail -f $input | nc $HOST $PORT | while read line; do
 			else
 				printf "NOTICE ${CHAN} :Do you really know the rules ?\r\n" >> $input
 			fi
-		if ["$rps" -eq 1]; then
+		elif [ "$rps" -eq 3 ]; then
 			printf "NOTICE ${CHAN} :SCISSORS\r\n" >> $input
 			if (echo "$line" | grep "ROCK" >> /dev/null); then
 				printf "NOTICE ${CHAN} :You lose\r\n" >> $input
