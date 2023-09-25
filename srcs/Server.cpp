@@ -6,7 +6,7 @@
 /*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:55:30 by sleon             #+#    #+#             */
-/*   Updated: 2023/09/22 17:19:27 by sleon            ###   ########.fr       */
+/*   Updated: 2023/09/25 14:55:22 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,6 @@ bool	Server::start()
 	_cmdsList["PASS"] = &RFC1459_PASS;
 	_cmdsList["NICK"] = &RFC1459_NICK;
 	_cmdsList["USER"] = &RFC1459_USER;
-	_cmdsList["MOTD"] = &RFC1459_MOTD;
 	_cmdsList["TIME"] = &RFC1459_TIME;
 	_cmdsList["PING"] = &RFC1459_PING;
 	_cmdsList["QUIT"] = &RFC1459_QUIT;

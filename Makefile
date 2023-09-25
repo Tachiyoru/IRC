@@ -6,13 +6,13 @@
 #    By: sleon <sleon@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/24 13:02:18 by adegain           #+#    #+#              #
-#    Updated: 2023/09/22 16:35:22 by sleon            ###   ########.fr        #
+#    Updated: 2023/09/25 14:54:01 by sleon            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME:=	ircserv
 
-SRCS:=	main Server Client Channel Utils RFC1459 MOTD LIST INVITE NOTICE PRIVMSG KICK JOIN KILL MODE NAMES NICK OPER PASS PING QUIT TIME TOPIC USER PART
+SRCS:=	main Server Client Channel Utils RFC1459 LIST INVITE NOTICE PRIVMSG KICK JOIN KILL MODE NAMES NICK OPER PASS PING QUIT TIME TOPIC USER PART
 # --- Compilation ----
 CC:= c++
 SRCS_PATH:= srcs/

@@ -6,7 +6,7 @@
 /*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 16:12:43 by adegain           #+#    #+#             */
-/*   Updated: 2023/09/22 14:04:55 by sleon            ###   ########.fr       */
+/*   Updated: 2023/09/25 14:55:48 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,6 @@ bool	ensureAuth(Client* c);
 void	RFC1459_PASS(Client* sender, parsedCmd_t &pcmd);
 void	RFC1459_NICK(Client* sender, parsedCmd_t &pcmd);
 void	RFC1459_USER(Client* sender, parsedCmd_t &pcmd);
-void	RFC1459_MOTD(Client* sender, parsedCmd_t &pcmd);
 void	RFC1459_TIME(Client* sender, parsedCmd_t &pcmd);
 void	RFC1459_PING(Client* sender, parsedCmd_t &pcmd);
 void	RFC1459_QUIT(Client* sender, parsedCmd_t &pcmd);

@@ -6,7 +6,7 @@
 /*   By: sleon <sleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 19:17:23 by sleon             #+#    #+#             */
-/*   Updated: 2023/09/18 18:39:01 by sleon            ###   ########.fr       */
+/*   Updated: 2023/09/25 14:53:46 by sleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	RFC1459_USER(Client *sender, parsedCmd_t &pcmd)
 		args.push_back(RFC1459_CHANNEL_MODES);
 		server->sendString(sender, format(RPL_MYINFO, args));
 
-		RFC1459_MOTD(sender, pcmd);
 		sender->hasAuthd(true);
 	}
 }
